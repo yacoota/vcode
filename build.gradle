@@ -7,7 +7,7 @@ plugins {
     // id 'org.springframework.boot.experimental.thin-launcher' version '1.0.26.RELEASE'
 }
 
-group 'com.asiainfo.business'
+group 'com.yacoota.business'
 version '1.0.0.1'
 
 sourceCompatibility = targetJavaVersion
@@ -91,7 +91,7 @@ archivesBaseName = "vcode"
 jar {
     manifest {
         attributes(
-                "Start-Class": "com.business.Application"
+                "Start-Class": "com.Application"
         )
     }
 }
