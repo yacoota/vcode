@@ -1,0 +1,58 @@
+server:
+  port: 19601
+  undertow:
+    buffer-size: 1024
+    direct-buffers: true
+    max-cookies: 500
+    max-http-post-size: -1
+    no-request-timeout: 8000
+  servlet:
+    session:
+      timeout: 1
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  freemarker:
+    check-template-location: false
+  thymeleaf:
+    check-template: false
+    check-template-location: false
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
+  datasource:
+    dynamic:
+      primary: master
+      datasource:
+        master:
+          url: jdbc:mysql://127.0.0.1:13308/tower?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&allowMultiQueries=true&pinGlobalTxToPhysicalConnection=true&noAccessToProcedureBodies=true&allowPublicKeyRetrieval=true&useOldAliasMetadataBehavior=true&serverTimezone=GMT%2B8
+          username: ENC(ujuIh250d5kGAow8O1NxVLecW+aWh8BtjZCBJtI5JQ1bN/XuBcckmylukfcexA1t)
+          password: ENC(pUmrR6+1dZmIwk8Dp1CSMSnQzufhCbSnNoAm9KmiNi8IX3Wllq7fahMyxMTet46Pr5kBwcPHfGi9CjJvM7ZIcg==)
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          druid:
+            initial-size: 10
+            max-active: 100
+            min-idle: 8
+            max-wait: 30000
+            min-evictable-idle-time-millis: 30000
+            max-evictable-idle-time-millis: 30000
+            time-between-eviction-runs-millis: 0
+            test-on-borrow: false
+            test-on-return: false
+            test-while-idle: true
+            pool-prepared-statements: true
+            max-open-prepared-statements: 100
+            filters: stat,wall
+            share-prepared-statements: true
+
+  redis:
+    cluster:
+      nodes: 127.0.0.1:16389
+    password: ENC(wGYZP/jtJkUbXMffrP9467CJ2zebUPpXGmjdDa1+K7ZWr+13+Lq0u3CwEZhI9jtG)
+    timeout: 5000
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        min-idle: 1
+        max-wait: 1000

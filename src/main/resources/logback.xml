@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false" packagingData="true">
+    <!-- 项目名称 -->
+    <contextName>Streaming Vcode Platform</contextName>
+
+    <property name="USER_HOME" value="./logs/vcode"/>
+
+    <!-- ConsoleApperder意思是从console中打印出来 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- 阈值过滤，就是log行为级别过滤，debug及debug以上的信息会被打印出来 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>debug</level>
+        </filter>
+        <encoder>
+            <!-- pattern模式 %d时间 %thread 线程名 %level行为级别 %logger logger名称 %method 方法名称 %message 调用方法的入参消息 -->
+            <pattern>%-4d [%thread] %-5level %logger.%method - %message%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 滚动日志文件 -->
+    <appender name="ROLLINGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <prudent>true</prudent>
+        <!-- 按天新建log日志 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${USER_HOME}/vcode_%d{yyyyMMdd}_%i.log</fileNamePattern>
+            <!-- 保留30天的历史日志 -->
+            <maxHistory>30</maxHistory>
+            <!-- 当一个日志大小大于10KB，则换一个新的日志。日志名的%i从0开始，自动递增 -->
+            <maxFileSize>1GB</maxFileSize>
+            <!-- 搜有存档文件中最大不超过5GB -->
+            <totalSizeCap>5GB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <!-- %ex就是指抛出的异常，full是显示全部，如果在{}中写入数字，则表示展示多少行 -->
+            <pattern>%-4d [%thread] %-5level %logger.%method - %msg%n%ex{full, DISPLAY_EX_EVAL}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- mybatis日志打印-->
+    <logger name="org.apache.ibatis" level="DEBUG" additivity="false"/>
+    <logger name="java.sql" level="INFO" additivity="true">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="ROLLINGFILE"/>
+    </logger>
+
+    <logger name="org.springframework" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="ROLLINGFILE"/>
+    </logger>
+
+    <logger name="freemarker" level="INFO" additivity="false"/>
+    <logger name="org.apache" level="INFO" additivity="false"/>
+    <logger name="org.quartz" level="DEBUG" additivity="false"/>
+    <logger name="org.hibernate" level="INFO" additivity="false"/>
+    <logger name="org.thymeleaf" level="INFO" additivity="false"/>
+    <logger name="org.eclipse.jetty" level="INFO" additivity="false"/>
+    <logger name="org.apache.kafka" level="INFO" additivity="false"/>
+    <logger name="org.apache.jasper.compiler" level="FINE" additivity="false"/>
+    <logger name="org.mybatis.spring" level="DEBUG" additivity="false"/>
+    <logger name="_org.springframework" level="INFO" additivity="false"/>
+    <logger name="org.springframework" level="INFO" additivity="false"/>
+    <logger name="org.springframework.security.web" level="INFO" additivity="false"/>
+    <logger name="org.springframework.data.convert" level="INFO" additivity="false"/>
+    <logger name="org.springframework.jdbc.datasource" level="INFO" additivity="false"/>
+    <logger name="org.springframework.context.annotation" level="INFO" additivity="false"/>
+    <logger name="org.springframework.beans.factory.support" level="FINE" additivity="false"/>
+    <logger name="org.springframework.http.codec" level="INFO" additivity="false"/>
+    <logger name="org.springframework.web.server" level="INFO" additivity="false"/>
+    <logger name="org.springframework.web.reactive" level="INFO" additivity="false"/>
+    <logger name="org.springframework.web.server.messaging" level="INFO" additivity="false"/>
+    <logger name="org.springframework.web.servlet.mvc.method" level="INFO" additivity="false"/>
+    <logger name="org.springframework.boot.autoconfigure.web" level="FINE" additivity="false"/>
+    <logger name="org.springframework.boot.autoconfigure.logging" level="FINE" additivity="false"/>
+    <logger name="org.springframework.xml.transform" level="FINE" additivity="false"/>
+
+    <logger name="reactor.util" level="INFO" additivity="false"/>
+    <logger name="org.xnio.nio" level="INFO" additivity="false"/>
+    <logger name="io.lettuce" level="INFO" additivity="false"/>
+    <logger name="io.netty.util" level="INFO" additivity="false"/>
+    <logger name="io.undertow" level="INFO" additivity="false"/>
+    <logger name="io.undertow.session" level="INFO" additivity="false"/>
+    <logger name="io.undertow.request.security" level="INFO" additivity="false"/>
+
+    <logger name="com.alibaba.druid.pool" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <logger name="org.springframework.jdbc.datasource" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <logger name="com.yacoota.business.demo.mapper" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <logger name="com.yacoota.business.home.mapper" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
