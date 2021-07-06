@@ -25,9 +25,9 @@ spring:
       primary: master
       datasource:
         master:
-          url: jdbc:mysql://127.0.0.1:13308/tower?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&allowMultiQueries=true&pinGlobalTxToPhysicalConnection=true&noAccessToProcedureBodies=true&allowPublicKeyRetrieval=true&useOldAliasMetadataBehavior=true&serverTimezone=GMT%2B8
-          username: ENC(ujuIh250d5kGAow8O1NxVLecW+aWh8BtjZCBJtI5JQ1bN/XuBcckmylukfcexA1t)
-          password: ENC(pUmrR6+1dZmIwk8Dp1CSMSnQzufhCbSnNoAm9KmiNi8IX3Wllq7fahMyxMTet46Pr5kBwcPHfGi9CjJvM7ZIcg==)
+          url: jdbc:mysql://127.0.0.1:3308/vcode?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true&allowMultiQueries=true&pinGlobalTxToPhysicalConnection=true&noAccessToProcedureBodies=true&allowPublicKeyRetrieval=true&useOldAliasMetadataBehavior=true&serverTimezone=GMT%2B8
+          username: ENC(Usf/8HeJZdYrK3T2CoNvKp8OKxrQepJIlJWHMoLAddSb5ZP0VefqVbzXmmYdaXTL)
+          password: ENC(h6UoMcaqN6kZPY/zHuPCXmJBBQhnCBs1ujggC6Ht4/0KGPQNUvr/2K3zLl8JERYR)
           driver-class-name: com.mysql.cj.jdbc.Driver
           druid:
             initial-size: 10
@@ -44,11 +44,10 @@ spring:
             max-open-prepared-statements: 100
             filters: stat,wall
             share-prepared-statements: true
-
   redis:
     cluster:
-      nodes: 127.0.0.1:16389
-    password: ENC(wGYZP/jtJkUbXMffrP9467CJ2zebUPpXGmjdDa1+K7ZWr+13+Lq0u3CwEZhI9jtG)
+      nodes: 127.0.0.1:6379
+    password: ENC(GtmHE/apsGErSsPH7VuXNY6OvXT6or4kHwDQ+mHceMVcil1+Z0nhVKGdFFsQ+qdT)
     timeout: 5000
     lettuce:
       pool:
@@ -56,3 +55,14 @@ spring:
         max-idle: 8
         min-idle: 1
         max-wait: 1000
+
+mybatis:
+  mapper-locations: classpath:mybatis/*Mapper.xml
+  type-aliases-package: com.yacoota.business.*.model
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+  returnPageInfo: check
