@@ -3,7 +3,6 @@ package com.yacoota.framework.servlet;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionIdListener;
 import javax.servlet.http.HttpSessionListener;
@@ -14,12 +13,12 @@ public class HttpServletSessionMonitor implements HttpSessionListener, HttpSessi
 
     @Override
     public void sessionCreated(HttpSessionEvent se) {
-        log.info("HttpSessionListener创建监测，session created: {}, \t; time: {}", se.getSession().getId(), System.currentTimeMillis());
+        log.trace("HttpSessionListener创建监测，session created: {}, \t; time: {}", se.getSession().getId(), System.currentTimeMillis());
     }
 
     @Override
     public void sessionDestroyed(HttpSessionEvent se) {
-        log.info("HttpSessionListener销毁监测，session destoryed: {}, \t; time: {}", se.getSession().getId(), System.currentTimeMillis());
+        log.trace("HttpSessionListener销毁监测，session destoryed: {}, \t; time: {}", se.getSession().getId(), System.currentTimeMillis());
     }
 
     @Override

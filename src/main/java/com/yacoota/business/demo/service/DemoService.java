@@ -12,6 +12,8 @@ public interface DemoService extends BaseService<Demo, DemoExample> {
 
     List<Demo> select(DemoExample example);
 
+    Demo select(Long id);
+
     PageInfo<Demo> selectPageHelper(DemoExample example, int pageNum, int pageSize);
 
 }

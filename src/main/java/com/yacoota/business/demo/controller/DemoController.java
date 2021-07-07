@@ -9,10 +9,11 @@ import org.jasypt.encryption.StringEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.swing.text.html.Option;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -27,26 +28,38 @@ public class DemoController {
 
     @GetMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
-    public String index(@PathVariable String id) {
+    public String index(@PathVariable Long id) {
         log.info("采集数据：{}", id);
-        return id;
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        request.getSession().setAttribute("data", request.getSession().getId());
+        return String.valueOf(id).concat(":").concat(request.getSession().getAttribute("data").toString());
+    }
+
+    @GetMapping("/session")
+    @ResponseStatus(HttpStatus.OK)
+    public String session(HttpServletRequest request) {
+        return request.getSession().getAttribute("data").toString();
     }
 
     @GetMapping(value = {"", "/", "/datas"})
+    @ResponseStatus(HttpStatus.OK)
+    public List<Demo> select() {
+        DemoExample example = new DemoExample();
+        return service.select(example);
+    }
+
+    @GetMapping(value = "/data/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Demo select(@PathVariable("id") Long id) {
+        return service.select(id);
+    }
+
+    @GetMapping("/datasc")
     @ResponseStatus(HttpStatus.OK)
     public PageInfo<Demo> list(@RequestParam(name = "pageNum", required = false, defaultValue = "1") int pageNum, @RequestParam(name = "pageSize", required = false, defaultValue = "10") int pageSize) {
         PageInfo<Demo> result = service.selectPageHelper(new DemoExample(), pageNum, pageSize);
         log.info("demo/list-->查询结果：" + result.getSize());
         return result;
-    }
-
-    @GetMapping(value = "/data/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public Demo select(@PathVariable("id") String id) {
-        DemoExample example = new DemoExample();
-        example.createCriteria().andIdEqualTo(Long.valueOf(id));
-        List<Demo> list = service.select(example);
-        return Optional.ofNullable(list).map(l -> l.get(0)).orElse(null);
     }
 
     @PostMapping("/data")

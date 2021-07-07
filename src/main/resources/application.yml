@@ -6,9 +6,6 @@ server:
     max-cookies: 500
     max-http-post-size: -1
     no-request-timeout: 8000
-  servlet:
-    session:
-      timeout: 1
 
 spring:
   main:
@@ -45,9 +42,12 @@ spring:
             filters: stat,wall
             share-prepared-statements: true
   redis:
-    cluster:
-      nodes: 127.0.0.1:6379
+    host: 127.0.0.1
+    port: 6379
+    #cluster:
+      # nodes: 127.0.0.1:6379
     password: ENC(GtmHE/apsGErSsPH7VuXNY6OvXT6or4kHwDQ+mHceMVcil1+Z0nhVKGdFFsQ+qdT)
+    database: 10
     timeout: 5000
     lettuce:
       pool:
@@ -55,14 +55,20 @@ spring:
         max-idle: 8
         min-idle: 1
         max-wait: 1000
+  cache:
+    redis:
+      key-prefix: cache#
+      time-to-live: 600000
+  session:
+    store-type: redis
+    timeout: 120
 
 mybatis:
   mapper-locations: classpath:mybatis/*Mapper.xml
   type-aliases-package: com.yacoota.business.*.model
 
 pagehelper:
-  helperDialect: mysql
+  helper-dialect: mysql
   reasonable: true
-  supportMethodsArguments: true
+  support-methods-arguments: true
   params: count=countSql
-  returnPageInfo: check
