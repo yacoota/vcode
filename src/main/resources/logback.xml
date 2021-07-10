@@ -11,7 +11,7 @@
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>debug</level>
         </filter>
-        <encoder>
+        <encoder class="com.yomahub.tlog.core.enhance.logback.AspectLogbackEncoder">
             <!-- pattern模式 %d时间 %thread 线程名 %level行为级别 %logger logger名称 %method 方法名称 %message 调用方法的入参消息 -->
             <pattern>%-4d [%thread] %-5level %logger.%method - %message%n</pattern>
             <charset>UTF-8</charset>
@@ -31,7 +31,7 @@
             <!-- 搜有存档文件中最大不超过5GB -->
             <totalSizeCap>5GB</totalSizeCap>
         </rollingPolicy>
-        <encoder>
+        <encoder class="com.yomahub.tlog.core.enhance.logback.AspectLogbackEncoder">
             <!-- %ex就是指抛出的异常，full是显示全部，如果在{}中写入数字，则表示展示多少行 -->
             <pattern>%-4d [%thread] %-5level %logger.%method - %msg%n%ex{full, DISPLAY_EX_EVAL}</pattern>
             <charset>UTF-8</charset>
@@ -96,6 +96,10 @@
     </logger>
 
     <logger name="com.yacoota.business.home.mapper" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <logger name="com.yacoota.framework.servlet" level="TRACE" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
 
